@@ -268,14 +268,19 @@ export default function Services() {
                     {t.specialPara2} <strong className="text-gold">{t.specialBold2}</strong> {t.specialPara2b}
                   </p>
                 </div>
-                <button
-                  onClick={() => document.querySelector('#booking')?.scrollIntoView({ behavior: 'smooth' })}
-                  className="flex-shrink-0 bg-white text-maroon font-poppins font-bold px-8 py-4 rounded-2xl
-                    shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 text-base"
-                  id="services-cta-btn"
-                >
-                  {t.bookBtn}
-                </button>
+                <div className="flex flex-col items-center gap-1">
+                  <button
+                    onClick={() => document.querySelector('#booking')?.scrollIntoView({ behavior: 'smooth' })}
+                    className="flex-shrink-0 bg-white text-maroon font-poppins font-bold px-8 py-4 rounded-2xl
+                      shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 text-base"
+                    id="services-cta-btn"
+                  >
+                    {t.bookBtn}
+                  </button>
+                  <p className="font-poppins text-white/80 text-xs mt-1 text-center">
+                    <strong className="text-sm font-semibold text-gold">Pre-Book</strong> before 10 days itself
+                  </p>
+                </div>
               </div>
             </div>
           </div>

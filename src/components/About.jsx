@@ -92,13 +92,18 @@ export default function About() {
               ))}
             </div>
 
-            <button
-              onClick={() => document.querySelector('#booking')?.scrollIntoView({ behavior: 'smooth' })}
-              className="btn-primary"
-              id="about-book-btn"
-            >
-              {t.bookBtn}
-            </button>
+            <div className="flex flex-col items-start gap-1">
+              <button
+                onClick={() => document.querySelector('#booking')?.scrollIntoView({ behavior: 'smooth' })}
+                className="btn-primary"
+                id="about-book-btn"
+              >
+                {t.bookBtn}
+              </button>
+              <p className="font-poppins text-gray-500 text-xs mt-1 ml-1">
+                <strong className="text-sm font-semibold text-saffron">Pre-Book</strong> before 10 days itself
+              </p>
+            </div>
           </div>
         </div>
       </div>

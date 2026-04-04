@@ -3,21 +3,16 @@ import { useLang } from '../context/LanguageContext'
 import translations from '../translations'
 import { X, ZoomIn, ChevronLeft, ChevronRight } from 'lucide-react'
 
-// ─── Dynamically import all images from src/public/img ───────────────────────
-// Gallery.jsx lives at src/components/, so public/img is one level up then into public/img
-const imageModules = import.meta.glob('../public/img/*.{jpg,jpeg,png,webp,gif,JPG,JPEG,PNG,WEBP}', {
+// ─── Dynamically import all images from src/public/img/gallery ────────────────
+// Gallery.jsx lives at src/components/, so public/img is one level up
+const imageModules = import.meta.glob('../public/img/gallery/*.{jpg,jpeg,png,webp,gif,JPG,JPEG,PNG,WEBP}', {
   eager: true,
 })
 
 /**
  * Build gallery items array from the imported modules.
- * Excludes logo.jpeg (used as site logo, not a gallery photo).
  */
 const galleryItems = Object.entries(imageModules)
-  .filter(([path]) => {
-    const name = path.toLowerCase()
-    return !name.includes('logo') && !name.includes('maruti_deity') && !name.includes('rajan_profile')
-  })
   .map(([path, mod], index) => {
     const filename = path.split('/').pop()
     const src = mod.default

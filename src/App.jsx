@@ -2,10 +2,12 @@ import { LanguageProvider } from './context/LanguageContext'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import About from './components/About'
+import PreBookBanner from './components/PreBookBanner'
 import Services from './components/Services'
 import Gallery from './components/Gallery'
 import BookingForm from './components/BookingForm'
 import Location from './components/Location'
+import ReviewInline from './components/ReviewInline'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
 import WhatsAppFloat from './components/WhatsAppFloat'
@@ -18,10 +20,12 @@ export default function App() {
         <main>
           <Hero />
           <About />
+          <PreBookBanner />
           <Services />
           <Gallery />
           <BookingForm />
           <Location />
+          <ReviewInline />
           <Contact />
         </main>
         <Footer />

@@ -1,6 +1,7 @@
 import { useLang } from '../context/LanguageContext'
 import translations from '../translations'
 import deityImg from '../public/img/maruti_deity.PNG'
+import velImg from '../public/img/vel.png'
 
 export default function Hero() {
   const { lang } = useLang()
@@ -323,9 +324,7 @@ export default function Hero() {
       {/* Bottom scroll cue */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/50 animate-bounce">
         <span className="font-poppins text-xs tracking-widest uppercase">{t.scroll}</span>
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <path d="M12 5v14M5 12l7 7 7-7" />
-        </svg>
+        <img src={velImg} alt="Scroll Down" className="h-10 w-auto opacity-75 object-contain" />
       </div>
 
       {/* Spin keyframe inline */}

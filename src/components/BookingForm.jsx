@@ -145,12 +145,17 @@ export default function BookingForm() {
                     ? 'Your booking details have been sent to Sri Mayurarajan via WhatsApp.'
                     : 'உங்கள் பதிவு விவரங்கள் வாட்ஸ்அப் மூலம் ஸ்ரீ மயூரராஜனுக்கு அனுப்பப்பட்டன.'}
                 </p>
-                <button
-                  onClick={() => setStatus('idle')}
-                  className="bg-saffron text-maroon font-poppins font-bold px-8 py-3 rounded-xl hover:bg-gold transition-colors duration-300"
-                >
-                  {t.anotherBtn}
-                </button>
+                <div className="flex flex-col items-center gap-1 mt-4">
+                  <button
+                    onClick={() => setStatus('idle')}
+                    className="bg-saffron text-maroon font-poppins font-bold px-8 py-3 rounded-xl hover:bg-gold transition-colors duration-300"
+                  >
+                    {t.anotherBtn}
+                  </button>
+                  <p className="font-poppins text-white/80 text-xs mt-2 text-center">
+                    <strong className="text-sm font-semibold text-gold">Pre-Book</strong> before 10 days itself
+                  </p>
+                </div>
               </div>
             ) : (
 
@@ -278,17 +283,22 @@ export default function BookingForm() {
                 </div>
 
                 {/* ── QUICK WHATSAPP BUTTON (no validation needed) ── */}
-                <button
-                  id="booking-whatsapp-btn"
-                  type="button"
-                  onClick={handleQuickWhatsApp}
-                  className="w-full flex items-center justify-center gap-3
-                    bg-green-500 hover:bg-green-400 text-white font-poppins font-semibold
-                    py-4 rounded-2xl transition-all duration-300 hover:scale-[1.02]"
-                >
-                  <WAIcon className="w-5 h-5" />
-                  {t.whatsappBtn}
-                </button>
+                <div className="flex flex-col items-center gap-1 w-full">
+                  <button
+                    id="booking-whatsapp-btn"
+                    type="button"
+                    onClick={handleQuickWhatsApp}
+                    className="w-full flex items-center justify-center gap-3
+                      bg-green-500 hover:bg-green-400 text-white font-poppins font-semibold
+                      py-4 rounded-2xl transition-all duration-300 hover:scale-[1.02]"
+                  >
+                    <WAIcon className="w-5 h-5" />
+                    {t.whatsappBtn}
+                  </button>
+                  <p className="font-poppins text-white/80 text-xs mt-2 text-center w-full">
+                    <strong className="text-sm font-semibold text-gold">Pre-Book</strong> before 10 days itself
+                  </p>
+                </div>
 
               </form>
             )}
