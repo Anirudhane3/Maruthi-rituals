@@ -221,7 +221,7 @@ export default function Services() {
         </div>
 
         {/* Services Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-10 sm:mb-12">
           {t.items.map((service, i) => (
             <div key={i} className="service-card service-card-anim reveal group">
               <div className="flex items-start gap-4">
@@ -256,23 +256,23 @@ export default function Services() {
               <div className="absolute top-0 right-0 w-64 h-64 bg-gold/10 rounded-full blur-3xl" />
               <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full blur-2xl" />
             </div>
-            <div className="relative z-10 p-8 md:p-12">
-              <div className="flex flex-col md:flex-row items-center gap-8">
-                <div className="text-6xl animate-float">🕉</div>
-                <div className="flex-1 text-center md:text-left">
-                  <h3 className="font-playfair text-white text-2xl md:text-3xl font-bold mb-3">{t.specialTitle}</h3>
-                  <p className="font-poppins text-white/80 text-sm md:text-base leading-relaxed mb-2">
+            <div className="relative z-10 p-6 sm:p-8 md:p-12">
+              <div className="flex flex-col md:flex-row items-center gap-5 md:gap-8">
+                <div className="text-5xl md:text-6xl animate-float">🕉</div>
+                <div className="flex-1 text-center">
+                  <h3 className="font-playfair text-white text-xl sm:text-2xl md:text-3xl font-bold mb-2 md:mb-3">{t.specialTitle}</h3>
+                  <p className="font-poppins text-white/80 text-sm leading-relaxed mb-2">
                     {t.specialPara1} <strong className="text-gold">{t.specialBold}</strong>
                   </p>
                   <p className="font-poppins text-white/70 text-sm leading-relaxed">
                     {t.specialPara2} <strong className="text-gold">{t.specialBold2}</strong> {t.specialPara2b}
                   </p>
                 </div>
-                <div className="flex flex-col items-center gap-1">
+                <div className="flex flex-col items-center gap-1 w-full md:w-auto">
                   <button
                     onClick={() => document.querySelector('#booking')?.scrollIntoView({ behavior: 'smooth' })}
-                    className="flex-shrink-0 bg-white text-maroon font-poppins font-bold px-8 py-4 rounded-2xl
-                      shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 text-base"
+                    className="w-full md:w-auto flex-shrink-0 bg-white text-maroon font-poppins font-bold px-6 sm:px-8 py-3 sm:py-4 rounded-2xl
+                      shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 text-sm sm:text-base"
                     id="services-cta-btn"
                   >
                     {t.bookBtn}

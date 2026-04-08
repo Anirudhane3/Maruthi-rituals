@@ -3,13 +3,18 @@ import deityImg from '../public/img/maruti_deity.PNG'
 
 export default function DeityMandala() {
   return (
-    <div className="relative flex items-center justify-center" style={{ width: '480px', height: '480px' }}>
-
+    <div
+      className="relative flex items-center justify-center"
+      style={{
+        // Scales smoothly: 260px on 320px viewport → 480px at 768px+
+        width:  'clamp(260px, 60vw, 480px)',
+        height: 'clamp(260px, 60vw, 480px)',
+      }}
+    >
       {/* ══ LAYER 1: Outer ring — slow clockwise ══ */}
-      <svg className="absolute inset-0" width="480" height="480" viewBox="0 0 480 480"
+      <svg className="absolute inset-0 w-full h-full" viewBox="0 0 480 480"
         style={{ animation: 'spin 26s linear infinite' }}>
 
-        {/* Outermost bead chain (r=232) — big + small alternating */}
         {Array.from({ length: 72 }, (_, i) => {
           const a = (i / 72) * 2 * Math.PI
           const r = 232
@@ -18,7 +23,6 @@ export default function DeityMandala() {
             fill="#FFD700" opacity={i % 6 === 0 ? 1 : 0.4} />
         })}
 
-        {/* Second bead ring (r=224, saffron) */}
         {Array.from({ length: 36 }, (_, i) => {
           const a = ((i + 0.5) / 36) * 2 * Math.PI
           const r = 224
@@ -28,7 +32,6 @@ export default function DeityMandala() {
 
         <circle cx="240" cy="240" r="218" fill="none" stroke="#FFD700" strokeWidth="0.8" opacity="0.3" />
 
-        {/* 24 Rangoli curved petals — bezier teardrops */}
         {Array.from({ length: 24 }, (_, i) => {
           const ang = (i / 24) * 360
           const bR = 182, tR = 216, w = 10, h = (tR - bR) * 0.38
@@ -42,7 +45,6 @@ export default function DeityMandala() {
           )
         })}
 
-        {/* Scalloped wave ring — 24-fold curved arcs (r=175, inward depth=11) */}
         <path
           d={Array.from({ length: 24 }, (_, i) => {
             const a1 = (i / 24) * 2 * Math.PI
@@ -57,11 +59,9 @@ export default function DeityMandala() {
           fill="none" stroke="#FFD700" strokeWidth="1.8" opacity="0.7"
         />
 
-        {/* Double boundary ring */}
         <circle cx="240" cy="240" r="163" fill="none" stroke="#FFD700" strokeWidth="1.2" opacity="0.45" />
         <circle cx="240" cy="240" r="160" fill="none" stroke="#FF9933" strokeWidth="0.7" opacity="0.3" strokeDasharray="5 4" />
 
-        {/* 12 Diamond ornaments at r=166 between petals */}
         {Array.from({ length: 12 }, (_, i) => {
           const a = ((i + 0.5) / 12) * 2 * Math.PI
           const r = 166
@@ -76,10 +76,9 @@ export default function DeityMandala() {
       </svg>
 
       {/* ══ LAYER 2: Middle ring — counter-clockwise ══ */}
-      <svg className="absolute inset-0" width="480" height="480" viewBox="0 0 480 480"
+      <svg className="absolute inset-0 w-full h-full" viewBox="0 0 480 480"
         style={{ animation: 'spin-reverse 16s linear infinite' }}>
 
-        {/* 12 Mango/rangoli curved petals — wider bezier */}
         {Array.from({ length: 12 }, (_, i) => {
           const ang = (i / 12) * 360
           const bR = 116, tR = 156, w = 15, h = (tR - bR) * 0.42
@@ -88,7 +87,6 @@ export default function DeityMandala() {
             <g key={i} transform={`rotate(${ang} 240 240)`}>
               <path d={d} fill="#FFD700" opacity="0.4" />
               <path d={d} fill="none" stroke="#FFD700" strokeWidth="1.3" opacity="1" />
-              {/* Dashed inner vein */}
               <line x1="240" y1={240 - bR - 2} x2="240" y2={240 - tR + 4}
                 stroke="#FF9933" strokeWidth="0.9" opacity="0.85" strokeDasharray="3 3" />
               <circle cx="240" cy={240 - tR + 4} r="2.5" fill="#FF9933" opacity="1" />
@@ -96,7 +94,6 @@ export default function DeityMandala() {
           )
         })}
 
-        {/* 12 Small teardrop buds between petals */}
         {Array.from({ length: 12 }, (_, i) => {
           const ang = ((i + 0.5) / 12) * 360
           const bR = 137, tR = 154, w = 5, h = (tR - bR) * 0.4
@@ -109,7 +106,6 @@ export default function DeityMandala() {
           )
         })}
 
-        {/* Scalloped inner wave (18-fold, r=110, depth=8) */}
         <path
           d={Array.from({ length: 18 }, (_, i) => {
             const a1 = (i / 18) * 2 * Math.PI
@@ -124,7 +120,6 @@ export default function DeityMandala() {
           fill="none" stroke="#FF9933" strokeWidth="1.6" opacity="0.75"
         />
 
-        {/* Dot ring at r=113 — 24 beads */}
         {Array.from({ length: 24 }, (_, i) => {
           const a = (i / 24) * 2 * Math.PI
           const r = 113
@@ -134,10 +129,9 @@ export default function DeityMandala() {
       </svg>
 
       {/* ══ LAYER 3: Core ring — slow clockwise ══ */}
-      <svg className="absolute inset-0" width="480" height="480" viewBox="0 0 480 480"
+      <svg className="absolute inset-0 w-full h-full" viewBox="0 0 480 480"
         style={{ animation: 'spin 38s linear infinite' }}>
 
-        {/* 8 inner flame petals */}
         {Array.from({ length: 8 }, (_, i) => {
           const ang = (i / 8) * 360
           const bR = 70, tR = 100, w = 9, h = (tR - bR) * 0.4
@@ -150,7 +144,6 @@ export default function DeityMandala() {
           )
         })}
 
-        {/* 8 small buds between flame petals */}
         {Array.from({ length: 8 }, (_, i) => {
           const ang = ((i + 0.5) / 8) * 360
           const bR = 68, tR = 82, w = 5, h = (tR - bR) * 0.4
@@ -162,7 +155,6 @@ export default function DeityMandala() {
           )
         })}
 
-        {/* Dot ring at r=65 */}
         {Array.from({ length: 16 }, (_, i) => {
           const a = (i / 16) * 2 * Math.PI
           const r = 65
@@ -170,7 +162,6 @@ export default function DeityMandala() {
             r={i % 2 === 0 ? 2.5 : 1.3} fill="#FFD700" opacity={i % 2 === 0 ? 0.9 : 0.5} />
         })}
 
-        {/* 6-petal rangoli lotus (inner) */}
         {Array.from({ length: 6 }, (_, i) => {
           const ang = (i / 6) * 360
           const bR = 10, tR = 50, w = 12, h = (tR - bR) * 0.42
@@ -183,7 +174,6 @@ export default function DeityMandala() {
           )
         })}
 
-        {/* 12-point rangoli star */}
         <polygon
           points={Array.from({ length: 12 }, (_, i) => {
             const a = (i / 12) * 2 * Math.PI - Math.PI / 2
@@ -193,7 +183,6 @@ export default function DeityMandala() {
           fill="#FFD700" opacity="0.5" stroke="#FF9933" strokeWidth="0.8"
         />
 
-        {/* Center dot cluster */}
         <circle cx="240" cy="240" r="9" fill="#FFD700" opacity="0.8" />
         <circle cx="240" cy="240" r="5" fill="#FF9933" opacity="1" />
         <circle cx="240" cy="240" r="2" fill="#FFD700" opacity="1" />
@@ -201,14 +190,14 @@ export default function DeityMandala() {
 
       {/* Glow behind image */}
       <div className="absolute rounded-full animate-pulse" style={{
-        width: '210px', height: '210px',
+        width: '43%', height: '43%',
         background: 'radial-gradient(circle, rgba(255,215,0,0.35) 0%, rgba(255,153,51,0.2) 50%, transparent 75%)',
         filter: 'blur(14px)',
       }} />
 
-      {/* Image circle */}
+      {/* Image circle — also scales with container */}
       <div className="relative rounded-full overflow-hidden border-2 border-gold/60 shadow-2xl" style={{
-        width: '196px', height: '196px',
+        width: '41%', height: '41%',
         boxShadow: '0 0 50px rgba(255,215,0,0.4), 0 0 100px rgba(255,153,51,0.2)',
       }}>
         <img src={deityImg} alt="Sri Maruti Deity" className="w-full h-full object-cover object-top" />
@@ -219,19 +208,18 @@ export default function DeityMandala() {
 
       {/* Ambient outer glow */}
       <div className="absolute rounded-full pointer-events-none" style={{
-        width: '500px', height: '500px',
+        width: '104%', height: '104%',
         background: 'radial-gradient(circle, transparent 46%, rgba(255,153,51,0.07) 70%, transparent 100%)',
       }} />
 
-      {/* Spin keyframe inline */}
       <style>{`
         @keyframes spin {
           from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
+          to   { transform: rotate(360deg); }
         }
         @keyframes spin-reverse {
           from { transform: rotate(0deg); }
-          to { transform: rotate(-360deg); }
+          to   { transform: rotate(-360deg); }
         }
       `}</style>
     </div>

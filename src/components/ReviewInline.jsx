@@ -37,11 +37,6 @@ export default function ReviewInline() {
       setSaving(false)
     }
 
-    // Also send to WhatsApp
-    const text = `Namaste Sri Mayurarajan,\n\nI would like to share my feedback:\nName: ${name.trim() || 'Anonymous'}\nRating: ${rating} Star${rating > 1 ? 's' : ''}\n${review.trim() ? `Review: ${review}` : ''}`
-    const whatsappUrl = `https://wa.me/919342372557?text=${encodeURIComponent(text)}`
-    window.open(whatsappUrl, '_blank', 'noopener,noreferrer')
-
     setSubmitted(true)
   }
 

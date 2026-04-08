@@ -34,13 +34,13 @@ export default function About() {
       <div className="absolute bottom-0 left-0 w-64 h-64 bg-gold/5 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16 reveal">
+        <div className="text-center mb-12 sm:mb-16 reveal">
           <span className="inline-block font-poppins text-saffron font-medium text-sm tracking-widest uppercase mb-3">{t.tag}</span>
-          <h2 className="section-heading">{t.heading}</h2>
+          <h2 className="font-playfair text-2xl sm:text-3xl md:text-4xl font-bold text-maroon text-center mb-2 break-words">{t.heading}</h2>
           <div className="gold-line" />
         </div>
 
-        <div className="grid md:grid-cols-2 gap-12 items-center">
+        <div className="grid md:grid-cols-2 gap-10 md:gap-12 items-center">
           {/* Image */}
           <div className="reveal-left">
             <div className="relative">
@@ -92,15 +92,15 @@ export default function About() {
               ))}
             </div>
 
-            <div className="flex flex-col items-start gap-1">
+            <div className="flex flex-col items-center md:items-start gap-1 w-full">
               <button
                 onClick={() => document.querySelector('#booking')?.scrollIntoView({ behavior: 'smooth' })}
-                className="btn-primary"
+                className="btn-primary w-full sm:w-auto"
                 id="about-book-btn"
               >
                 {t.bookBtn}
               </button>
-              <p className="font-poppins text-gray-500 text-xs mt-1 ml-1">
+              <p className="font-poppins text-gray-500 text-xs mt-1 ml-1 text-center md:text-left">
                 <strong className="text-sm font-semibold text-saffron">Pre-Book</strong> before 10 days itself
               </p>
             </div>
