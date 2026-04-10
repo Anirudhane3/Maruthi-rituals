@@ -1,7 +1,7 @@
 import React from 'react'
-import deityImg from '../public/img/maruti_deity.PNG'
+import deityImg from '../img/maruti_deity.PNG'
 
-export default function DeityMandala() {
+export default function DeityMandala({ variant = 'deity' }) {
   return (
     <div
       className="relative flex items-center justify-center"
@@ -195,15 +195,23 @@ export default function DeityMandala() {
         filter: 'blur(14px)',
       }} />
 
-      {/* Image circle — also scales with container */}
-      <div className="relative rounded-full overflow-hidden border-2 border-gold/60 shadow-2xl" style={{
+      {/* Image / Om circle — also scales with container */}
+      <div className={`relative rounded-full overflow-hidden border-2 border-gold/60 shadow-2xl flex items-center justify-center ${variant === 'om' ? 'bg-maroon/50' : ''}`} style={{
         width: '41%', height: '41%',
         boxShadow: '0 0 50px rgba(255,215,0,0.4), 0 0 100px rgba(255,153,51,0.2)',
       }}>
-        <img src={deityImg} alt="Sri Maruti Deity" className="w-full h-full object-cover object-top" />
-        <div className="absolute inset-0 rounded-full pointer-events-none" style={{
-          background: 'radial-gradient(circle at center, transparent 52%, rgba(128,0,0,0.55) 78%, rgba(61,0,0,0.9) 100%)',
-        }} />
+        {variant === 'om' ? (
+          <div className="text-5xl sm:text-6xl md:text-7xl font-playfair text-gold pt-2 animate-pulse" style={{ textShadow: '0 0 40px rgba(255,215,0,0.5)' }}>
+            ॐ
+          </div>
+        ) : (
+          <>
+            <img src={deityImg} alt="Sri Maruti Deity" className="w-full h-full object-cover object-top" />
+            <div className="absolute inset-0 rounded-full pointer-events-none" style={{
+              background: 'radial-gradient(circle at center, transparent 52%, rgba(128,0,0,0.55) 78%, rgba(61,0,0,0.9) 100%)',
+            }} />
+          </>
+        )}
       </div>
 
       {/* Ambient outer glow */}

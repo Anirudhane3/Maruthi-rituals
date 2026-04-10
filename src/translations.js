@@ -17,7 +17,7 @@ const translations = {
       tag: '📸 Sacred Moments',
       heading: 'Our Gallery',
       desc: 'Glimpses of auspicious rituals, sacred ceremonies, and divine blessings performed with devotion and authenticity.',
-      empty: 'No images found. Add images to the public/img folder.',
+      empty: 'No images found. Add images to the img folder.',
       count: 'Showcasing {n} sacred moments',
     },
 
@@ -182,7 +182,7 @@ const translations = {
       tag: '📸 புனித தருணங்கள்',
       heading: 'எங்கள் படக்கொத்து',
       desc: 'அர்ப்பணிப்பு மற்றும் நம்பகத்தன்மையுடன் நடத்தப்பட்ட மங்கல பூஜைகள், புனித நிகழ்வுகள் மற்றும் தெய்வீக ஆசிகளின் தோற்றங்கள்.',
-      empty: 'படங்கள் கிடைக்கவில்லை. public/img கோப்புறையில் படங்களை சேர்க்கவும்.',
+      empty: 'படங்கள் கிடைக்கவில்லை. img கோப்புறையில் படங்களை சேர்க்கவும்.',
       count: '{n} புனித தருணங்கள் காட்சிப்படுத்தப்படுகின்றன',
     },
 

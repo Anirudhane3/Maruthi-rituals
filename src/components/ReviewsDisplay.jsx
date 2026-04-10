@@ -302,7 +302,7 @@ export default function ReviewsDisplay() {
 
   // touch / swipe
   const onTouchStart = (e) => { touchStartX.current = e.touches[0].clientX }
-  const onTouchEnd   = (e) => {
+  const onTouchEnd = (e) => {
     if (touchStartX.current === null) return
     const dx = e.changedTouches[0].clientX - touchStartX.current
     if (Math.abs(dx) > 40) dx < 0 ? next() : prev()
@@ -315,7 +315,7 @@ export default function ReviewsDisplay() {
 
   function offset(i) {
     let d = i - active
-    if (d > total / 2)  d -= total
+    if (d > total / 2) d -= total
     if (d < -total / 2) d += total
     return d
   }
@@ -430,9 +430,9 @@ export default function ReviewsDisplay() {
                   >
                     {r.createdAt
                       ? new Date(r.createdAt.toDate()).toLocaleDateString('en-IN', {
-                          month: 'short',
-                          year: 'numeric',
-                        })
+                        month: 'short',
+                        year: 'numeric',
+                      })
                       : 'Verified Client'}
                   </span>
                   {r.service && (
@@ -682,3 +682,4 @@ export default function ReviewsDisplay() {
     </>
   )
 }
+

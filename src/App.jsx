@@ -11,11 +11,23 @@ import ReviewInline from './components/ReviewInline'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
 import WhatsAppFloat from './components/WhatsAppFloat'
+import SplashScreen from './components/SplashScreen'
+import { useState, useEffect } from 'react'
 
 export default function App() {
+  const [isLoading, setIsLoading] = useState(() => {
+    return !sessionStorage.getItem('hasSeenSplash')
+  })
+
+  const handleSplashFinish = () => {
+    setIsLoading(false)
+    sessionStorage.setItem('hasSeenSplash', 'true')
+  }
+
   return (
     <LanguageProvider>
-      <div className="font-poppins">
+      {isLoading && <SplashScreen onFinish={handleSplashFinish} />}
+      <div className={`font-poppins ${isLoading ? 'h-screen overflow-hidden' : ''}`}>
         <Navbar />
         <main>
           <Hero />

@@ -2,13 +2,14 @@ import { useState, useEffect } from 'react'
 import { Menu, X } from 'lucide-react'
 import { useLang } from '../context/LanguageContext'
 import translations from '../translations'
-import logoImg from '../public/img/logo.jpeg'
+import logoImg from '../img/logo.jpeg'
 
 export default function Navbar() {
   const { lang, toggleLang } = useLang()
   const t = translations[lang].nav
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [activeSection, setActiveSection] = useState('')
 
   const navLinks = [
     { label: t.about,    href: '#about'    },
@@ -20,10 +21,26 @@ export default function Navbar() {
   ]
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50)
-    window.addEventListener('scroll', handleScroll)
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50)
+      
+      const sections = navLinks.map(link => document.querySelector(link.href)).filter(Boolean)
+      let current = '' // no active section by default (e.g. Hero)
+      for (const section of sections) {
+        const rect = section.getBoundingClientRect()
+        // Highlight section if its top is above 1/3 viewport height and bottom is below 1/3 viewport height
+        if (rect.top <= window.innerHeight / 3 && rect.bottom >= window.innerHeight / 3) {
+          current = `#${section.id}`
+          break
+        }
+      }
+      setActiveSection(current)
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    handleScroll() // initial check
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+  }, [navLinks])
 
   // Close menu when clicking outside
   useEffect(() => {
@@ -78,18 +95,22 @@ export default function Navbar() {
 
           {/* ── Desktop Nav (lg+: 1024px and above) ── */}
           <ul className="hidden lg:flex items-center gap-0.5">
-            {navLinks.map(({ label, href }) => (
+            {navLinks.map(({ label, href }) => {
+              const isActive = activeSection === href
+              return (
               <li key={href}>
                 <button
                   onClick={() => handleNavClick(href)}
-                  className="relative text-white/90 hover:text-gold font-poppins font-medium px-3 py-2 text-sm tracking-wide
-                    transition-colors duration-300 group"
+                  className={`relative font-poppins font-medium px-3 py-2 text-sm tracking-wide transition-colors duration-300 group
+                    ${isActive ? 'text-gold' : 'text-white/90 hover:text-gold'}`}
                 >
                   {label}
-                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-gold rounded-full transition-all duration-300 group-hover:w-4/5" />
+                  <span className={`absolute bottom-0 left-1/2 -translate-x-1/2 h-0.5 bg-gold rounded-full transition-all duration-300 
+                    ${isActive ? 'w-4/5' : 'w-0 group-hover:w-4/5'}`} />
                 </button>
               </li>
-            ))}
+              )
+            })}
 
             {/* Language Toggle — desktop */}
             <li>

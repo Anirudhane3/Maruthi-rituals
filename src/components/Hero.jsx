@@ -1,7 +1,7 @@
 import { useLang } from '../context/LanguageContext'
 import translations from '../translations'
 import DeityMandala from './DeityMandala'
-import velImg from '../public/img/vel.png'
+import velImg from '../img/vel.png'
 
 export default function Hero() {
   const { lang } = useLang()

@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react'
 import { Award, BookOpen, Star } from 'lucide-react'
 import { useLang } from '../context/LanguageContext'
 import translations from '../translations'
-import rajanImg from '../public/img/rajan_profile.jpeg'
+import rajanImg from '../img/rajan_profile.jpeg'
 
 export default function About() {
   const { lang } = useLang()

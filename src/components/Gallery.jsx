@@ -5,7 +5,7 @@ import { X, ChevronLeft, ChevronRight, Images, ChevronDown } from 'lucide-react'
 
 // ─── Dynamically import all gallery images ────────────────────────────────────
 const imageModules = import.meta.glob(
-  '../public/img/gallery/*.{jpg,jpeg,png,webp,gif,JPG,JPEG,PNG,WEBP}',
+  '../img/gallery/*.{jpg,jpeg,png,webp,gif,JPG,JPEG,PNG,WEBP}',
   { eager: true }
 )
 
