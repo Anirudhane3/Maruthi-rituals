@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react'
-import { Menu, X } from 'lucide-react'
+import { Menu, X, Moon, Sun } from 'lucide-react'
 import { useLang } from '../context/LanguageContext'
+import { useTheme } from '../context/ThemeContext'
 import translations from '../translations'
 import logoImg from '../img/logo.jpeg'
 
 export default function Navbar() {
   const { lang, toggleLang } = useLang()
+  const { theme, toggleTheme } = useTheme()
   const t = translations[lang].nav
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
@@ -60,8 +62,8 @@ export default function Navbar() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled
-          ? 'bg-maroon/95 backdrop-blur-md shadow-2xl shadow-maroon/30 py-2'
-          : 'bg-gradient-to-b from-black/60 to-transparent py-3'
+          ? 'bg-maroon/95 dark:bg-divine-dark/95 backdrop-blur-md shadow-2xl shadow-maroon/30 dark:shadow-[rgba(26,13,13,0.5)] py-2'
+          : 'bg-gradient-to-b from-[rgba(26,13,13,0.5)] to-transparent py-3'
       }`}
     >
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -112,6 +114,19 @@ export default function Navbar() {
               )
             })}
 
+            {/* Theme Toggle — desktop */}
+            <li>
+              <button
+                onClick={toggleTheme}
+                className="ml-1 flex items-center justify-center bg-white/10 hover:bg-white/20 border border-white/30 hover:border-gold/60
+                  text-white hover:text-gold w-8 h-8 rounded-full focus:outline-none focus:ring-2 focus:ring-gold/50
+                  backdrop-blur-sm transition-all duration-300 hover:scale-105"
+                title="Toggle divine theme"
+              >
+                {theme === 'dark' ? <Moon size={16} className="text-diya-gold" /> : <Sun size={16} className="text-gold" />}
+              </button>
+            </li>
+
             {/* Language Toggle — desktop */}
             <li>
               <button
@@ -141,6 +156,16 @@ export default function Navbar() {
 
           {/* ── Mobile / Tablet right side (below lg) ── */}
           <div className="lg:hidden flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
+            {/* Theme Toggle Mobile */}
+            <button
+              onClick={toggleTheme}
+              className="flex items-center justify-center bg-white/10 hover:bg-white/20 border border-white/30 
+                text-white w-8 h-8 rounded-full focus:outline-none backdrop-blur-sm transition-all duration-300"
+              title="Toggle theme"
+            >
+              {theme === 'dark' ? <Moon size={16} className="text-diya-gold" /> : <Sun size={16} className="text-white" />}
+            </button>
+
             {/* Language Toggle */}
             <button
               id="lang-toggle-mobile-btn"
@@ -172,7 +197,7 @@ export default function Navbar() {
           }`}
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="bg-maroon/96 backdrop-blur-md rounded-2xl p-3 border border-saffron/20 shadow-2xl">
+          <div className="bg-maroon/96 dark:bg-divine-dark/98 backdrop-blur-md rounded-2xl p-3 border border-saffron/20 shadow-2xl">
             {/* Grid of nav links for tablet, list for mobile */}
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-1 mb-2">
               {navLinks.map(({ label, href }) => (

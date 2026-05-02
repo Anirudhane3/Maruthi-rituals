@@ -69,7 +69,7 @@ export default function ReviewInline() {
         </div>
       ) : (
         <div className="flex flex-col items-center justify-center text-center">
-          <h4 className="font-playfair text-maroon text-xl font-bold mb-3">
+          <h4 className="font-playfair text-maroon dark:text-diya-gold text-xl font-bold mb-3 transition-colors duration-500">
             {lang === 'en' ? 'Share Your Experience' : 'உங்கள் அனுபவத்தை பகிரவும்'}
           </h4>
 
@@ -100,7 +100,7 @@ export default function ReviewInline() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder={lang === 'en' ? 'Your name (optional)' : 'உங்கள் பெயர் (விருப்பத்தேர்வு)'}
-              className="w-full max-w-md bg-transparent border-b-2 border-orange-200 py-2 px-1 font-poppins text-gray-700 placeholder-gray-400 focus:outline-none focus:border-saffron transition-colors text-center text-sm"
+              className="w-full max-w-md bg-transparent border-b-2 border-orange-200 dark:border-gold/20 py-2 px-1 font-poppins text-gray-700 dark:text-amber-100 placeholder-gray-400 dark:placeholder-amber-100/40 focus:outline-none focus:border-saffron dark:focus:border-diya-gold transition-colors text-center text-sm"
             />
 
             {/* Review textarea */}
@@ -110,7 +110,7 @@ export default function ReviewInline() {
                 onChange={(e) => setReview(e.target.value)}
                 placeholder={lang === 'en' ? 'Write a brief review...' : 'விமர்சனம் எழுதவும்...'}
                 rows={1}
-                className="w-full bg-transparent border-b-2 border-orange-200 py-2 px-1 pr-8 font-poppins text-gray-700 placeholder-gray-400 focus:outline-none focus:border-saffron resize-none overflow-hidden transition-colors text-center"
+                className="w-full bg-transparent border-b-2 border-orange-200 dark:border-gold/20 py-2 px-1 pr-8 font-poppins text-gray-700 dark:text-amber-100 placeholder-gray-400 dark:placeholder-amber-100/40 focus:outline-none focus:border-saffron dark:focus:border-diya-gold resize-none overflow-hidden transition-colors text-center"
                 style={{ minHeight: '40px' }}
                 onInput={(e) => {
                   e.target.style.height = 'auto'

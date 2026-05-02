@@ -12,9 +12,9 @@ const contactIcons = [
 ]
 
 const contactMeta = [
-  { href: 'tel:+919342372557', gradient: 'from-blue-500 to-cyan-500', bg: 'bg-blue-50', hoverBg: 'hover:bg-blue-100', textColor: 'text-blue-700', id: 'contact-phone' },
-  { href: 'mailto:kingofpeacock125@gmail.com', gradient: 'from-red-500 to-pink-500', bg: 'bg-red-50', hoverBg: 'hover:bg-red-100', textColor: 'text-red-700', id: 'contact-email' },
-  { href: 'https://wa.me/919342372557?text=Namaste%20Sri%20Mayurarajan%2C%20I%20would%20like%20to%20know%20more%20about%20your%20services.', gradient: 'from-green-500 to-emerald-400', bg: 'bg-green-50', hoverBg: 'hover:bg-green-100', textColor: 'text-green-700', id: 'contact-whatsapp', external: true },
+  { href: 'tel:+919342372557', gradient: 'from-blue-500 to-cyan-500', bg: 'bg-blue-50 dark:bg-blue-900/10', hoverBg: 'hover:bg-blue-100 dark:hover:bg-blue-900/20', textColor: 'text-blue-700 dark:text-blue-300', id: 'contact-phone' },
+  { href: 'mailto:kingofpeacock125@gmail.com', gradient: 'from-red-500 to-pink-500', bg: 'bg-red-50 dark:bg-red-900/10', hoverBg: 'hover:bg-red-100 dark:hover:bg-red-900/20', textColor: 'text-red-700 dark:text-red-300', id: 'contact-email' },
+  { href: 'https://wa.me/919342372557?text=Namaste%20Sri%20Mayurarajan%2C%20I%20would%20like%20to%20know%20more%20about%20your%20services.', gradient: 'from-green-500 to-emerald-400', bg: 'bg-green-50 dark:bg-green-900/10', hoverBg: 'hover:bg-green-100 dark:hover:bg-green-900/20', textColor: 'text-green-700 dark:text-green-300', id: 'contact-whatsapp', external: true },
 ]
 
 export default function Contact() {
@@ -43,8 +43,7 @@ export default function Contact() {
     <section
       id="contact"
       ref={sectionRef}
-      className="py-24 relative overflow-hidden"
-      style={{ background: 'linear-gradient(180deg, #FFF3E0 0%, #FFF8F0 100%)' }}
+      className="py-24 relative overflow-hidden bg-gradient-to-b from-[#FFF3E0] to-[#FFF8F0] dark:from-incense-grey dark:to-divine-dark transition-colors duration-500"
     >
       <div className="absolute top-10 left-10 w-64 h-64 bg-saffron/5 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-10 right-10 w-64 h-64 bg-gold/5 rounded-full blur-3xl pointer-events-none" />
@@ -64,16 +63,16 @@ export default function Contact() {
               <a key={i} id={meta.id} href={meta.href}
                 target={meta.external ? '_blank' : undefined}
                 rel={meta.external ? 'noopener noreferrer' : undefined}
-                className={`reveal group block ${meta.bg} ${meta.hoverBg} rounded-3xl p-6 border border-orange-100 shadow-md
-                  hover:shadow-xl hover:-translate-y-1 transition-all duration-300 text-center`}
+                className={`reveal group block ${meta.bg} ${meta.hoverBg} rounded-3xl p-6 border border-orange-100 dark:border-saffron/10 shadow-md dark:shadow-none
+                  hover:shadow-xl dark:hover:shadow-[0_0_20px_rgba(255,215,0,0.05)] hover:-translate-y-1 transition-all duration-500 text-center`}
               >
                 <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${meta.gradient} text-white flex items-center justify-center mx-auto mb-4
                   shadow-lg group-hover:scale-110 transition-transform duration-300`}>
                   {contactIcons[i]}
                 </div>
-                <h3 className="font-playfair font-bold text-maroon text-lg mb-1">{item.label}</h3>
+                <h3 className="font-playfair font-bold text-maroon dark:text-diya-gold text-lg mb-1">{item.label}</h3>
                 <p className={`font-poppins font-semibold ${meta.textColor} text-sm mb-2 break-all`}>{item.value}</p>
-                <p className="font-poppins text-gray-500 text-xs">{item.detail}</p>
+                <p className="font-poppins text-gray-500 dark:text-amber-100/60 text-xs">{item.detail}</p>
               </a>
             )
           })}

@@ -9,8 +9,7 @@
 
   body {
     font-family: 'Poppins', sans-serif;
-    background-color: #FFF8F0;
-    color: #1a1a1a;
+    @apply bg-[#FFF8F0] dark:bg-divine-dark text-[#1a1a1a] dark:text-gray-200 transition-colors duration-500;
     overflow-x: hidden;
   }
 
@@ -32,7 +31,7 @@
 
   /* Section heading style */
   .section-heading {
-    @apply font-playfair text-3xl md:text-4xl font-bold text-maroon text-center mb-2;
+    @apply font-playfair text-3xl md:text-4xl font-bold text-maroon dark:text-diya-gold text-center mb-2 transition-colors duration-500;
   }
 
   /* Gold accent line */
@@ -42,17 +41,17 @@
 
   /* Card hover */
   .service-card {
-    @apply bg-white rounded-2xl p-6 shadow-md border border-orange-100
-      transition-all duration-300 ease-in-out cursor-default
-      hover:shadow-xl hover:-translate-y-2 hover:border-saffron;
+    @apply bg-white dark:bg-incense-grey/50 rounded-2xl p-6 shadow-md border border-orange-100 dark:border-gold/10
+      transition-all duration-500 ease-in-out cursor-default
+      hover:shadow-xl hover:-translate-y-2 hover:border-saffron dark:hover:border-diya-gold dark:hover:shadow-[0_0_20px_rgba(255,215,0,0.15)];
   }
 
   /* Form inputs */
   .form-input {
-    @apply w-full px-4 py-3 rounded-xl border-2 border-orange-200 bg-white
-      font-poppins text-gray-700 placeholder-gray-400 outline-none
-      transition-all duration-300
-      focus:border-saffron focus:ring-4 focus:ring-orange-100;
+    @apply w-full px-4 py-3 rounded-xl border-2 border-orange-200 dark:border-gold/20 bg-white dark:bg-incense-grey/80
+      font-poppins text-gray-700 dark:text-amber-100 placeholder-gray-400 dark:placeholder-amber-100/40 outline-none
+      transition-all duration-500
+      focus:border-saffron dark:focus:border-diya-gold focus:ring-4 focus:ring-orange-100 dark:focus:ring-gold/10;
   }
 
   /* Primary button */
@@ -129,7 +128,9 @@
 
 /* Scrollbar Styling */
 ::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: #FFF8F0; }
+::-webkit-scrollbar-track { 
+  @apply bg-[#FFF8F0] dark:bg-divine-dark transition-colors duration-500; 
+}
 ::-webkit-scrollbar-thumb {
   background: linear-gradient(to bottom, #800000, #FF9933);
   border-radius: 4px;

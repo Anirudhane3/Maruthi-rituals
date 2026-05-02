@@ -1,8 +1,10 @@
 import { initializeApp } from 'firebase/app'
 import { getFirestore } from 'firebase/firestore'
+import { getAuth, GoogleAuthProvider } from 'firebase/auth'
+import { getStorage } from 'firebase/storage'
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCcqAZSdo8dyn7vFt9tJFPTztVgl99Ht4w",
+  apiKey: "AIzaSyCcqAZSdo0dyn7vFt9tJFPTztVgl99Ht4w",
   authDomain: "disable-analytics-94e71.firebaseapp.com",
   projectId: "disable-analytics-94e71",
   storageBucket: "disable-analytics-94e71.firebasestorage.app",
@@ -12,4 +14,8 @@ const firebaseConfig = {
 }
 
 const app = initializeApp(firebaseConfig)
-export const db = getFirestore(app)
+
+export const db       = getFirestore(app)
+export const auth     = getAuth(app)
+export const storage  = getStorage(app)
+export const googleProvider = new GoogleAuthProvider()

@@ -2,6 +2,7 @@ import { useEffect, useState, useRef, useCallback } from 'react'
 import { db } from '../firebase'
 import { collection, query, orderBy, limit, onSnapshot } from 'firebase/firestore'
 import { Star, ChevronLeft, ChevronRight, ChevronDown, ChevronUp, X } from 'lucide-react'
+import { useTheme } from '../context/ThemeContext'
 
 /* ─── helpers ─────────────────────────────────────────────── */
 function Stars({ rating, size = 13 }) {
@@ -74,12 +75,13 @@ function formatDate(ts) {
 }
 
 /* ─── card geometry ───────────────────────────────────────── */
-function getCardStyle(offset) {
+function getCardStyle(offset, theme) {
   const abs = Math.abs(offset)
   if (abs > 1) return { display: 'none' }
 
   const isCenter = offset === 0
   const sign = offset < 0 ? -1 : 1
+  const isDark = theme === 'dark'
 
   return {
     position: 'absolute',
@@ -89,14 +91,14 @@ function getCardStyle(offset) {
     minHeight: isCenter ? 220 : 190,
     borderRadius: 20,
     background: isCenter
-      ? 'linear-gradient(160deg,#fffbf5 0%,#fff8ee 100%)'
-      : 'linear-gradient(160deg,#fdf6ec 0%,#faf0e2 100%)',
+      ? (isDark ? 'linear-gradient(160deg,#2a1212 0%,#1a0d0d 100%)' : 'linear-gradient(160deg,#fffbf5 0%,#fff8ee 100%)')
+      : (isDark ? 'linear-gradient(160deg,#1a0d0d 0%,#2a1212 100%)' : 'linear-gradient(160deg,#fdf6ec 0%,#faf0e2 100%)'),
     border: isCenter
-      ? '1px solid rgba(180,83,9,0.18)'
-      : '1px solid rgba(180,83,9,0.10)',
+      ? (isDark ? '1px solid rgba(255,215,0,0.2)' : '1px solid rgba(180,83,9,0.18)')
+      : (isDark ? '1px solid rgba(255,215,0,0.1)' : '1px solid rgba(180,83,9,0.10)'),
     boxShadow: isCenter
-      ? '0 16px 48px rgba(180,83,9,0.12), 0 2px 8px rgba(0,0,0,0.06)'
-      : '0 4px 16px rgba(0,0,0,0.07)',
+      ? (isDark ? '0 16px 48px rgba(30,15,15,0.7), 0 2px 8px rgba(255,215,0,0.1)' : '0 16px 48px rgba(180,83,9,0.12), 0 2px 8px rgba(0,0,0,0.06)')
+      : (isDark ? '0 4px 16px rgba(30,15,15,0.5)' : '0 4px 16px rgba(0,0,0,0.07)'),
     transform: isCenter
       ? 'translate(-50%,-50%) scale(1)'
       : `translate(calc(-50% + ${sign * 56}%), -50%) scale(0.82)`,
@@ -259,6 +261,7 @@ function AllReviewsPanel({ reviews, onClose }) {
 
 /* ─── main component ──────────────────────────────────────── */
 export default function ReviewsDisplay() {
+  const { theme } = useTheme()
   const [reviews, setReviews] = useState([])
   const [loading, setLoading] = useState(true)
   const [avgRating, setAvgRating] = useState(0)
@@ -358,9 +361,10 @@ export default function ReviewsDisplay() {
               fontFamily: "'Playfair Display', serif",
               fontSize: 'clamp(22px, 5vw, 30px)',
               fontWeight: 700,
-              color: '#1a1a2e',
+              color: theme === 'dark' ? '#FFE270' : '#1a1a2e',
               lineHeight: 1.25,
               margin: 0,
+              transition: 'color 0.5s',
             }}
           >
             What Our Clients Say
@@ -401,10 +405,11 @@ export default function ReviewsDisplay() {
         >
           {carouselReviews.map((r, i) => {
             const off = offset(i)
-            const style = getCardStyle(off)
+            const style = getCardStyle(off, theme)
             if (style.display === 'none') return null
 
             const isCenter = off === 0
+            const isDark = theme === 'dark'
 
             return (
               <div
@@ -466,7 +471,7 @@ export default function ReviewsDisplay() {
                     fontFamily: "'Playfair Display', serif",
                     fontSize: isCenter ? 15 : 13,
                     fontWeight: 700,
-                    color: '#1a1a2e',
+                    color: isDark ? '#fff' : '#1a1a2e',
                     lineHeight: 1.35,
                     margin: '0 0 6px',
                     display: '-webkit-box',
@@ -486,7 +491,7 @@ export default function ReviewsDisplay() {
                     style={{
                       fontFamily: 'Poppins, sans-serif',
                       fontSize: 11,
-                      color: '#57534e',
+                      color: isDark ? 'rgba(255,236,204,0.7)' : '#57534e',
                       lineHeight: 1.6,
                       margin: '0 0 12px',
                       display: '-webkit-box',

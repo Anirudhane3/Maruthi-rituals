@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: 'class', // Enable class-based dark mode
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
@@ -13,6 +14,10 @@ export default {
         'deep-maroon': '#5C0000',
         'light-saffron': '#FFEECC',
         'cream': '#FFF8F0',
+        // Divine Dark Mode Colors
+        'divine-dark': '#1a0d0d',   // Deep spiritual maroon-charcoal (not black)
+        'incense-grey': '#2a1b1b',  // Warm incense-toned grey for cards
+        'diya-gold': '#FFE270',     // Soft glowing gold for text and highlights
       },
       fontFamily: {
         playfair: ['"Playfair Display"', 'serif'],

@@ -29,14 +29,14 @@ export default function About() {
   const icons = [<BookOpen size={20} />, <Award size={20} />, <Star size={20} />]
 
   return (
-    <section id="about" ref={sectionRef} className="py-24 bg-cream relative overflow-hidden">
-      <div className="absolute top-0 right-0 w-72 h-72 bg-saffron/5 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-64 h-64 bg-gold/5 rounded-full blur-3xl pointer-events-none" />
+    <section id="about" ref={sectionRef} className="py-24 bg-cream dark:bg-divine-dark relative overflow-hidden transition-colors duration-500">
+      <div className="absolute top-0 right-0 w-72 h-72 bg-saffron/5 dark:bg-gold/15 rounded-full blur-3xl pointer-events-none transition-colors duration-500" />
+      <div className="absolute bottom-0 left-0 w-64 h-64 bg-gold/5 dark:bg-saffron/15 rounded-full blur-3xl pointer-events-none transition-colors duration-500" />
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12 sm:mb-16 reveal">
-          <span className="inline-block font-poppins text-saffron font-medium text-sm tracking-widest uppercase mb-3">{t.tag}</span>
-          <h2 className="font-playfair text-2xl sm:text-3xl md:text-4xl font-bold text-maroon text-center mb-2 break-words">{t.heading}</h2>
+          <span className="inline-block font-poppins text-saffron dark:text-diya-gold font-medium text-sm tracking-widest uppercase mb-3 drop-shadow-sm">{t.tag}</span>
+          <h2 className="font-playfair text-2xl sm:text-3xl md:text-4xl font-bold text-maroon dark:text-diya-gold text-center mb-2 break-words transition-colors duration-500">{t.heading}</h2>
           <div className="gold-line" />
         </div>
 
@@ -62,12 +62,12 @@ export default function About() {
                   </div>
                 </div>
               </div>
-              <div className="absolute -bottom-4 -right-4 bg-white rounded-2xl shadow-xl p-4 border border-orange-100">
+              <div className="absolute -bottom-4 -right-4 bg-white dark:bg-incense-grey/90 backdrop-blur-sm rounded-2xl shadow-xl dark:shadow-[0_0_20px_rgba(255,215,0,0.1)] p-4 border border-orange-100 dark:border-gold/20 transition-all duration-500">
                 <div className="flex items-center gap-2">
-                  <span className="text-2xl">🏆</span>
+                  <span className="text-2xl drop-shadow-md">🏆</span>
                   <div>
-                    <p className="font-playfair text-maroon font-bold text-sm">{t.badge1}</p>
-                    <p className="font-poppins text-gray-500 text-xs">{t.badge2}</p>
+                    <p className="font-playfair text-maroon dark:text-diya-gold font-bold text-sm">{t.badge1}</p>
+                    <p className="font-poppins text-gray-500 dark:text-amber-100/60 text-xs">{t.badge2}</p>
                   </div>
                 </div>
               </div>
@@ -76,18 +76,18 @@ export default function About() {
 
           {/* Text */}
           <div className="reveal-right">
-            <h3 className="font-playfair text-2xl md:text-3xl font-bold text-maroon mb-2">{t.role}</h3>
-            <h4 className="font-poppins text-saffron font-semibold mb-6 text-lg">{t.subtitle}</h4>
-            <p className="font-poppins text-gray-600 leading-relaxed mb-4 text-base">{t.para1}</p>
-            <p className="font-poppins text-gray-600 leading-relaxed mb-8 text-base">{t.para2}</p>
+            <h3 className="font-playfair text-2xl md:text-3xl font-bold text-maroon dark:text-white mb-2 transition-colors duration-500">{t.role}</h3>
+            <h4 className="font-poppins text-saffron dark:text-diya-gold font-semibold mb-6 text-lg tracking-wide">{t.subtitle}</h4>
+            <p className="font-poppins text-gray-600 dark:text-amber-100/70 leading-relaxed mb-4 text-base transition-colors duration-500">{t.para1}</p>
+            <p className="font-poppins text-gray-600 dark:text-amber-100/70 leading-relaxed mb-8 text-base transition-colors duration-500">{t.para2}</p>
 
             <div className="space-y-3 mb-8">
               {t.highlights.map((text, i) => (
                 <div key={i} className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-saffron/20 to-gold/20 flex items-center justify-center text-saffron flex-shrink-0">
+                  <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-saffron/20 to-gold/20 dark:from-saffron/40 dark:to-gold/40 flex items-center justify-center text-saffron dark:text-diya-gold flex-shrink-0 shadow-sm dark:shadow-gold/20">
                     {icons[i]}
                   </div>
-                  <span className="font-poppins text-gray-700 text-sm">{text}</span>
+                  <span className="font-poppins text-gray-700 dark:text-amber-100/80 text-sm transition-colors duration-500">{text}</span>
                 </div>
               ))}
             </div>
@@ -100,8 +100,8 @@ export default function About() {
               >
                 {t.bookBtn}
               </button>
-              <p className="font-poppins text-gray-500 text-xs mt-1 ml-1 text-center md:text-left">
-                <strong className="text-sm font-semibold text-saffron">Pre-Book</strong> before 10 days itself
+              <p className="font-poppins text-gray-500 dark:text-amber-100/50 text-xs mt-1 ml-1 text-center md:text-left transition-colors duration-500">
+                <strong className="text-sm font-semibold text-saffron dark:text-diya-gold drop-shadow-sm">Pre-Book</strong> before 10 days itself
               </p>
             </div>
           </div>

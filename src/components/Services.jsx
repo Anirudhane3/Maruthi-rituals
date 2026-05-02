@@ -203,8 +203,7 @@ export default function Services() {
     <section
       id="services"
       ref={sectionRef}
-      className="py-24 relative overflow-hidden"
-      style={{ background: 'linear-gradient(180deg, #FFF8F0 0%, #FFF3E0 100%)' }}
+      className="py-24 relative overflow-hidden bg-gradient-to-b from-cream to-[#FFF3E0] dark:from-divine-dark dark:to-incense-grey transition-colors duration-500"
     >
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <div className="absolute top-20 left-10 text-saffron/5 text-[200px] font-playfair select-none">ॐ</div>
