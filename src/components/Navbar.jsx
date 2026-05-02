@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react'
-import { Menu, X, Moon, Sun } from 'lucide-react'
+import { Menu, X, Moon, Sun, LogIn, LogOut } from 'lucide-react'
 import { useLang } from '../context/LanguageContext'
 import { useTheme } from '../context/ThemeContext'
 import translations from '../translations'
 import logoImg from '../img/logo.jpeg'
+import { auth, googleProvider } from '../firebase'
+import { signInWithPopup, signOut, onAuthStateChanged } from 'firebase/auth'
 
 export default function Navbar() {
   const { lang, toggleLang } = useLang()
@@ -12,6 +14,34 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [activeSection, setActiveSection] = useState('')
+
+  const [isAdmin, setIsAdmin] = useState(false)
+  const [user, setUser] = useState(null)
+  const ADMIN_EMAIL = 'kingofpeacock125@gmail.com'.toLowerCase()
+
+  useEffect(() => {
+    const unsub = onAuthStateChanged(auth, (u) => {
+      setUser(u)
+      setIsAdmin(!!u && u.email?.toLowerCase() === ADMIN_EMAIL)
+    })
+    return () => unsub()
+  }, [])
+
+  const handleLogin = async () => {
+    try {
+      const result = await signInWithPopup(auth, googleProvider)
+      const signedEmail = result.user.email?.toLowerCase() || ''
+      if (signedEmail !== ADMIN_EMAIL) {
+        alert(`Access denied.\n\nYou signed in as: ${result.user.email}\nAdmin email must be: kingofpeacock125@gmail.com`)
+        await signOut(auth)
+      }
+    } catch (err) {
+      if (err.code !== 'auth/popup-closed-by-user') {
+        alert('Login error: ' + err.message)
+      }
+      console.error(err)
+    }
+  }
 
   const navLinks = [
     { label: t.about,    href: '#about'    },
@@ -152,6 +182,20 @@ export default function Navbar() {
                 {t.bookBtn}
               </button>
             </li>
+
+            {/* Admin Login/Logout */}
+            <li>
+              <button
+                onClick={user ? () => signOut(auth) : handleLogin}
+                className="ml-2 flex items-center gap-1.5 bg-white/10 hover:bg-white/20 border border-white/30 hover:border-gold/60
+                  text-white hover:text-gold font-poppins font-medium px-3 py-1.5 rounded-full text-xs
+                  backdrop-blur-sm transition-all duration-300"
+                title={user ? "Sign Out" : "Admin Login"}
+              >
+                {user ? <LogOut size={14} /> : <LogIn size={14} />}
+                <span className="hidden xl:inline">{user ? "Sign Out" : "Admin"}</span>
+              </button>
+            </li>
           </ul>
 
           {/* ── Mobile / Tablet right side (below lg) ── */}
@@ -218,6 +262,17 @@ export default function Navbar() {
                   py-2.5 rounded-xl text-sm tracking-wide shadow-lg hover:shadow-saffron/50 transition-all duration-300"
               >
                 {t.bookBtn}
+              </button>
+            </div>
+            {/* Admin Mobile */}
+            <div className="border-t border-white/10 pt-2 mt-2">
+              <button
+                onClick={user ? () => { signOut(auth); setIsOpen(false); } : () => { handleLogin(); setIsOpen(false); }}
+                className="w-full flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 text-white font-poppins font-medium
+                  py-2.5 rounded-xl text-sm transition-all duration-300 border border-white/10"
+              >
+                {user ? <LogOut size={16} /> : <LogIn size={16} />}
+                {user ? "Sign Out" : "Admin Login"}
               </button>
             </div>
           </div>

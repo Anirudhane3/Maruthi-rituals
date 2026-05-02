@@ -1,7 +1,8 @@
 import { useEffect, useState, useRef, useCallback } from 'react'
-import { db } from '../firebase'
-import { collection, query, orderBy, limit, onSnapshot } from 'firebase/firestore'
-import { Star, ChevronLeft, ChevronRight, ChevronDown, ChevronUp, X } from 'lucide-react'
+import { db, auth } from '../firebase'
+import { collection, query, orderBy, limit, onSnapshot, deleteDoc, doc } from 'firebase/firestore'
+import { onAuthStateChanged } from 'firebase/auth'
+import { Star, ChevronLeft, ChevronRight, ChevronDown, ChevronUp, X, Trash2 } from 'lucide-react'
 import { useTheme } from '../context/ThemeContext'
 
 /* ─── helpers ─────────────────────────────────────────────── */
@@ -116,7 +117,7 @@ function getCardStyle(offset, theme) {
 }
 
 /* ─── All-reviews expanded panel ──────────────────────────── */
-function AllReviewsPanel({ reviews, onClose }) {
+function AllReviewsPanel({ reviews, onClose, isAdmin, onDelete }) {
   return (
     <div
       style={{
@@ -217,17 +218,33 @@ function AllReviewsPanel({ reviews, onClose }) {
               }}
             >
               {/* top row: avatar + name + date */}
-              <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
-                <Avatar name={r.name || 'Anonymous'} size={38} />
-                <div style={{ flex: 1 }}>
-                  <p style={{ margin: 0, fontFamily: 'Poppins, sans-serif', fontSize: 13, fontWeight: 600, color: '#1a1a2e' }}>
-                    {r.name || 'Anonymous'}
-                  </p>
-                  <p style={{ margin: 0, fontFamily: 'Poppins, sans-serif', fontSize: 10, color: '#92400e' }}>
-                    Verified Client · {formatDate(r.createdAt)}
-                  </p>
+              <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 10 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                  <Avatar name={r.name || 'Anonymous'} size={38} />
+                  <div>
+                    <p style={{ margin: 0, fontFamily: 'Poppins, sans-serif', fontSize: 13, fontWeight: 600, color: '#1a1a2e' }}>
+                      {r.name || 'Anonymous'}
+                    </p>
+                    <p style={{ margin: 0, fontFamily: 'Poppins, sans-serif', fontSize: 10, color: '#92400e' }}>
+                      Verified Client · {formatDate(r.createdAt)}
+                    </p>
+                  </div>
                 </div>
-                <Stars rating={r.rating || 5} size={11} />
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 6 }}>
+                  <Stars rating={r.rating || 5} size={11} />
+                  {isAdmin && (
+                    <button
+                      onClick={(e) => { e.stopPropagation(); onDelete(r.id); }}
+                      title="Delete Review"
+                      style={{
+                        background: 'none', border: 'none', padding: 2, cursor: 'pointer',
+                        color: '#ef4444', display: 'flex', alignItems: 'center', justifyContent: 'center'
+                      }}
+                    >
+                      <Trash2 size={16} />
+                    </button>
+                  )}
+                </div>
               </div>
 
               {/* service pill */}
@@ -268,6 +285,27 @@ export default function ReviewsDisplay() {
   const [active, setActive] = useState(0)
   const [showAll, setShowAll] = useState(false)
   const touchStartX = useRef(null)
+
+  const [isAdmin, setIsAdmin] = useState(false)
+  const ADMIN_EMAIL = 'kingofpeacock125@gmail.com'.toLowerCase()
+
+  useEffect(() => {
+    const unsub = onAuthStateChanged(auth, (user) => {
+      setIsAdmin(!!user && user.email?.toLowerCase() === ADMIN_EMAIL)
+    })
+    return () => unsub()
+  }, [])
+
+  const handleDelete = async (id) => {
+    if (!isAdmin) return
+    if (!confirm('Are you sure you want to delete this review?')) return
+    try {
+      await deleteDoc(doc(db, 'reviews', id))
+    } catch (err) {
+      console.error(err)
+      alert('Delete failed: ' + err.message)
+    }
+  }
 
   useEffect(() => {
     const q = query(collection(db, 'reviews'), orderBy('createdAt', 'desc'), limit(50))
@@ -327,7 +365,7 @@ export default function ReviewsDisplay() {
   return (
     <>
       {showAll && (
-        <AllReviewsPanel reviews={reviews} onClose={() => setShowAll(false)} />
+        <AllReviewsPanel reviews={reviews} onClose={() => setShowAll(false)} isAdmin={isAdmin} onDelete={handleDelete} />
       )}
 
       <section
@@ -460,9 +498,22 @@ export default function ReviewsDisplay() {
                   )}
                 </div>
 
-                {/* stars */}
-                <div style={{ marginBottom: 8 }}>
+                {/* stars & admin actions */}
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
                   <Stars rating={r.rating || 5} size={isCenter ? 13 : 11} />
+                  {isAdmin && (
+                    <button
+                      onClick={(e) => { e.stopPropagation(); handleDelete(r.id); }}
+                      style={{
+                        background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.2)',
+                        borderRadius: 4, padding: 4, cursor: 'pointer', color: '#ef4444',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center'
+                      }}
+                      title="Delete Review"
+                    >
+                      <Trash2 size={14} />
+                    </button>
+                  )}
                 </div>
 
                 {/* title / excerpt */}

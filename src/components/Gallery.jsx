@@ -2,12 +2,12 @@ import { useEffect, useRef, useState, useCallback } from 'react'
 import { useLang } from '../context/LanguageContext'
 import { useTheme } from '../context/ThemeContext'
 import translations from '../translations'
-import { X, ChevronLeft, ChevronRight, Images, ChevronDown, Upload, Trash2, LogIn, LogOut, Loader2 } from 'lucide-react'
+import { X, ChevronLeft, ChevronRight, Images, ChevronDown, Upload, Trash2, Loader2 } from 'lucide-react'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import 'react-lazy-load-image-component/src/effects/blur.css'
-import { db, auth, googleProvider } from '../firebase'
+import { db, auth } from '../firebase'
 import { collection, addDoc, deleteDoc, doc, onSnapshot, serverTimestamp, orderBy, query } from 'firebase/firestore'
-import { signInWithPopup, signOut, onAuthStateChanged } from 'firebase/auth'
+import { onAuthStateChanged } from 'firebase/auth'
 
 const CLOUDINARY_CLOUD = 'dvw39k3zb'
 const CLOUDINARY_PRESET = 'ml_gallery'
@@ -267,73 +267,42 @@ function FanSpread({ items, onOpen, theme }) {
 }
 
 // ─── Admin Bar ────────────────────────────────────────────────────────────────
-function AdminBar({ user, isAdmin, onLogin, onLogout, onUpload, uploading, progress }) {
+function AdminBar({ isAdmin, onUpload, uploading, progress }) {
   const fileRef = useRef()
+  if (!isAdmin) return null
+
   return (
     <div style={{
       display: 'flex', alignItems: 'center', justifyContent: 'center',
       gap: 10, marginBottom: 18, flexWrap: 'wrap',
     }}>
-      {user ? (
-        isAdmin ? (
-        <>
-          <span style={{ fontFamily: 'Poppins,sans-serif', fontSize: 11, color: '#b45309', fontWeight: 600 }}>
-            ✓ Admin: {user.email}
-          </span>
-          <input
-            ref={fileRef}
-            type="file"
-            accept="image/*"
-            multiple
-            style={{ display: 'none' }}
-            onChange={(e) => onUpload(Array.from(e.target.files))}
-          />
-          <button
-            onClick={() => fileRef.current.click()}
-            disabled={uploading}
-            style={{
-              display: 'inline-flex', alignItems: 'center', gap: 6,
-              fontFamily: 'Poppins,sans-serif', fontSize: 11, fontWeight: 600,
-              color: '#fff', background: '#b45309',
-              border: 'none', borderRadius: 100,
-              padding: '7px 16px', cursor: uploading ? 'not-allowed' : 'pointer',
-              opacity: uploading ? 0.7 : 1,
-              boxShadow: '0 2px 10px rgba(180,83,9,0.30)',
-            }}
-          >
-            {uploading ? <Loader2 size={13} style={{ animation: 'spin 1s linear infinite' }} /> : <Upload size={13} />}
-            {uploading ? `Uploading… ${progress}%` : 'Add Photos'}
-          </button>
-          <button
-            onClick={onLogout}
-            style={{
-              display: 'inline-flex', alignItems: 'center', gap: 5,
-              fontFamily: 'Poppins,sans-serif', fontSize: 11, fontWeight: 600,
-              color: '#b45309', background: 'transparent',
-              border: '1px solid rgba(180,83,9,0.35)', borderRadius: 100,
-              padding: '7px 14px', cursor: 'pointer',
-            }}
-          ><LogOut size={13} /> Sign Out</button>
-        </>
-        ) : (
-          /* Signed in but not the admin account — shouldn't happen, but safety net */
-          <span style={{ fontFamily: 'Poppins,sans-serif', fontSize: 11, color: '#ef4444' }}>
-            Not authorized ({user.email})
-            <button onClick={onLogout} style={{ marginLeft: 8, color: '#b45309', background: 'none', border: 'none', cursor: 'pointer', fontSize: 11 }}>Sign out</button>
-          </span>
-        )
-      ) : (
-        <button
-          onClick={onLogin}
-          style={{
-            display: 'inline-flex', alignItems: 'center', gap: 6,
-            fontFamily: 'Poppins,sans-serif', fontSize: 11, fontWeight: 600,
-            color: '#78716c', background: 'transparent',
-            border: '1px solid rgba(120,113,108,0.30)', borderRadius: 100,
-            padding: '7px 16px', cursor: 'pointer',
-          }}
-        ><LogIn size={13} /> Admin Login</button>
-      )}
+      <span style={{ fontFamily: 'Poppins,sans-serif', fontSize: 11, color: '#b45309', fontWeight: 600 }}>
+        ✓ Admin Mode
+      </span>
+      <input
+        ref={fileRef}
+        type="file"
+        accept="image/*"
+        multiple
+        style={{ display: 'none' }}
+        onChange={(e) => onUpload(Array.from(e.target.files))}
+      />
+      <button
+        onClick={() => fileRef.current.click()}
+        disabled={uploading}
+        style={{
+          display: 'inline-flex', alignItems: 'center', gap: 6,
+          fontFamily: 'Poppins,sans-serif', fontSize: 11, fontWeight: 600,
+          color: '#fff', background: '#b45309',
+          border: 'none', borderRadius: 100,
+          padding: '7px 16px', cursor: uploading ? 'not-allowed' : 'pointer',
+          opacity: uploading ? 0.7 : 1,
+          boxShadow: '0 2px 10px rgba(180,83,9,0.30)',
+        }}
+      >
+        {uploading ? <Loader2 size={13} style={{ animation: 'spin 1s linear infinite' }} /> : <Upload size={13} />}
+        {uploading ? `Uploading… ${progress}%` : 'Add Photos'}
+      </button>
       <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
     </div>
   )
@@ -373,23 +342,6 @@ export default function Gallery() {
   const closeLightbox = () => setLightboxIdx(null)
   const prevImage     = () => setLightboxIdx((i) => (i - 1 + allItems.length) % allItems.length)
   const nextImage     = () => setLightboxIdx((i) => (i + 1) % allItems.length)
-
-  // ── Google login
-  const handleLogin = async () => {
-    try {
-      const result = await signInWithPopup(auth, googleProvider)
-      const signedEmail = result.user.email?.toLowerCase() || ''
-      if (signedEmail !== ADMIN_EMAIL) {
-        alert(`Access denied.\n\nYou signed in as: ${result.user.email}\nAdmin email must be: kingofpeacock125@gmail.com`)
-        await signOut(auth)
-      }
-    } catch (err) {
-      if (err.code !== 'auth/popup-closed-by-user') {
-        alert('Login error: ' + err.message)
-      }
-      console.error(err)
-    }
-  }
 
   // ── Upload photos to Cloudinary + save URL in Firestore
   const handleUpload = async (files) => {
@@ -465,10 +417,7 @@ export default function Gallery() {
 
         {/* Admin bar */}
         <AdminBar
-          user={user}
           isAdmin={isAdmin}
-          onLogin={handleLogin}
-          onLogout={() => signOut(auth)}
           onUpload={handleUpload}
           uploading={uploading}
           progress={progress}
